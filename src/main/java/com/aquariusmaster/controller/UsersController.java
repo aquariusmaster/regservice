@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -50,9 +51,19 @@ public class UsersController {
         return "home";
     }
 
-    @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public String registarion(@Valid Account account){
+    @RequestMapping(value = "/registration", method = RequestMethod.POST)
+    public String registarion(Model model, @Valid Account account, BindingResult result){
 
+        if(result.hasErrors()) {
+            model.addAttribute("return_status", true);
+            return "registration";
+        }
+        if(accountsService.exists(account.getEmail())) {
+            result.rejectValue("email", "Email already exist", "Email already exists");
+            model.addAttribute("return_status", true);
+            return "registration";
+        }
+        accountsService.create(account);
         System.out.println(account);
         return "registration";
     }
@@ -61,6 +72,7 @@ public class UsersController {
     public String showRegist(Model model){
 
         model.addAttribute("account", new Account());
+        model.addAttribute("return_status", false);
         return "registration";
     }
 

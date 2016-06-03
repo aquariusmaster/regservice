@@ -64,6 +64,7 @@ public class Account {
         this.is_confirmed = is_confirmed;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -71,13 +72,13 @@ public class Account {
 
         Account account = (Account) o;
 
-        return email.equals(account.email.toLowerCase());
+        return email != null ? email.equals(account.email) : account.email == null;
 
     }
 
     @Override
     public int hashCode() {
-        return email.hashCode();
+        return email != null ? email.hashCode() : 0;
     }
 
     @Override

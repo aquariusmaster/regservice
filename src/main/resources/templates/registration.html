@@ -30,6 +30,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
+
     $("#signup-btn").click(function(){
         $("#reg-start").hide();
         $("#reg-form").show();
@@ -38,6 +39,7 @@ $(document).ready(function(){
 //        $("#reg-form").hide();
 //        $("#reg-success").show();
 //    });
+
     
 });
 </script>
@@ -46,7 +48,12 @@ $(document).ready(function(){
 
   <!-- Primary Page Layout
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-<div id="reg-start" class="section hero">
+
+
+  <p th:if="${return_status}">Wrong user or password</p>
+
+
+  <div id="reg-start" class="section hero">
     <div class="container">
         <div class="two column">
             <div class="u-pull-right" style="margin-top: 10px">
@@ -67,13 +74,15 @@ $(document).ready(function(){
             
         </div>
       
-      <form th:action="@{/signup}" method="post" th:object="${account}">
+      <!--/*@thymesVar id="account" type="com.aquariusmaster.entity.Account"*/-->
+      <form th:action="@{/registration}" method="post" th:object="${account}">
         <div class="row">
             <div class="two columns" align="right">
                 <label for="email" style="padding-top: 8px">email</label>
             </div>
             <div class="four columns">
                 <input class="u-full-width" id="email" type="email" name="email" th:field="*{email}">
+                <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Incorrect data</span>
             </div>  
         </div>
         <div class="row">
@@ -82,6 +91,7 @@ $(document).ready(function(){
             </div>
             <div class="four columns">
                 <input class="u-full-width" id="pass" type="password" name="password" th:field="*{password}">
+                <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Incorrect data</span>
             </div>  
         </div>
         <div class="row">

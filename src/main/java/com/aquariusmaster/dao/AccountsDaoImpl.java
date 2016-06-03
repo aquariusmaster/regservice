@@ -63,16 +63,16 @@ public class AccountsDaoImpl implements AccountsDao {
         return result;
     }
 
-    /** Check for Account entry already exist
+    /** Check for Account entry already exists
      *
      * @param email Email for compare
-     * @return {@code true} email is already exist; {@code false otherwise}
+     * @return {@code true} email is already exists; {@code false otherwise}
      */
     @Override
-    public boolean exist(String email) {
+    public boolean exists(String email) {
         String sql = "SELECT COUNT(*) FROM accounts WHERE email = ?";
         int result = jdbcTemplate.queryForObject(sql, new Object[]{email.toLowerCase()}, Integer.class);
-        logger.info("AccountsDao:EXIST exist is :  " + (result == 1) + " for email " + email);
+        logger.info("AccountsDao:EXIST exists is :  " + (result == 1) + " for email " + email);
         return result == 1;
     }
 

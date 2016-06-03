@@ -3,21 +3,16 @@ package com.aquariusmaster.service;
 import com.aquariusmaster.RegserviceApplication;
 import com.aquariusmaster.entity.Account;
 import junit.framework.TestCase;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Set;
 //static import org
 
@@ -42,7 +37,7 @@ public class AccountsServiceImplTest extends TestCase {
             account.setEmail("Verydrybeaver@gmail.com");
             assertEquals(false, accountsService.create(account));
         }catch(Exception e){
-            assertTrue(accountsService.exist("Verydrybeaver@gmail.com"));
+            assertTrue(accountsService.exists("Verydrybeaver@gmail.com"));
         }
 
 
@@ -61,8 +56,8 @@ public class AccountsServiceImplTest extends TestCase {
 
         Account account = getAccount();
         assertTrue(accountsService.create(account));
-        assertTrue(accountsService.exist("Aquariusmaster@yandex.ru"));
-        assertTrue(accountsService.exist("aquariusmaster@yandex.ru"));
+        assertTrue(accountsService.exists("Aquariusmaster@yandex.ru"));
+        assertTrue(accountsService.exists("aquariusmaster@yandex.ru"));
 
     }
 

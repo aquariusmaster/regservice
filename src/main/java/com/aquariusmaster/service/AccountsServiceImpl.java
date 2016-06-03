@@ -28,9 +28,9 @@ public class AccountsServiceImpl implements AccountsService {
     }
 
     @Override
-    public boolean exist(String email) {
+    public boolean exists(String email) {
 
-        return accountsDao.exist(email);
+        return accountsDao.exists(email);
     }
 
 }
