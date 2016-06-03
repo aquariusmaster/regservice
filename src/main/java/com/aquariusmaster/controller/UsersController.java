@@ -28,31 +28,15 @@ public class UsersController {
         return new Account();
     }
 
-    @RequestMapping("/home")
+    @RequestMapping("/")
     public String showHome(){
 
-        return "home";
+        return "redirect:/registration";
     }
 
-    @RequestMapping("/test")
-    public String test(){
-
-        Account account = new Account();
-        account.setEmail("Aquariusmaster@yandex.ru");
-        account.setPassword("hello12");
-        account.setIs_confirmed(true);
-
-        boolean created = accountsService.create(account);
-        System.out.println("Account created: " + created);
-
-        Account retrived = accountsService.getAccount("Aquariusmaster@yandex.ru");
-        System.out.println("Account retrived:");
-        System.out.println("\t" + retrived);
-        return "home";
-    }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String registarion(Model model, @Valid Account account, BindingResult result){
+    public String registration(Model model, @Valid Account account, BindingResult result){
 
         if(result.hasErrors()) {
             model.addAttribute("return_status", true);
@@ -64,8 +48,7 @@ public class UsersController {
             return "registration";
         }
         accountsService.create(account);
-        System.out.println(account);
-        return "registration";
+        return "success";
     }
 
     @RequestMapping("/registration")
