@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Registration Server</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="/css/normalize.css">
+  <link rel="stylesheet" href="/css/skeleton.css">
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="/images/favicon.png">
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("#signup-btn").click(function(){
+        $("#reg-start").hide();
+        $("#reg-form").show();
+    });
+//    $("#submit-btn").click(function(){
+//        $("#reg-form").hide();
+//        $("#reg-success").show();
+//    });
+    
+});
+</script>
+</head>
+<body>
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+<div id="reg-start" class="section hero">
+    <div class="container">
+        <div class="two column">
+            <div class="u-pull-right" style="margin-top: 10px">
+                <a id="signup-btn" class="button button-primary">sign up</a>
+            </div>
+        </div>
+        
+    </div>
+</div>
+    
+<div id="reg-form" class="container" style="padding-top: 50px" hidden="hidden">
+  
+  <div class="twevle columns offset-by-one">
+      <div class="row">
+            <div class="twelve columns offset-by-one">
+               <h1>Registration</h1>
+            </div>
+            
+        </div>
+      
+      <form th:action="@{/signup}" method="post" th:object="${account}">
+        <div class="row">
+            <div class="two columns" align="right">
+                <label for="email" style="padding-top: 8px">email</label>
+            </div>
+            <div class="four columns">
+                <input class="u-full-width" id="email" type="email" name="email" th:field="*{email}">
+            </div>  
+        </div>
+        <div class="row">
+            <div class="two columns" align="right">
+                <label for="pass" style="padding-top: 8px">password</label>
+            </div>
+            <div class="four columns">
+                <input class="u-full-width" id="pass" type="password" name="password" th:field="*{password}">
+            </div>  
+        </div>
+        <div class="row">
+            <div class="twelve columns offset-by-two">
+                <input class="button button-primary" id="submit-btn" type="submit" value="create my account"/>
+            </div>                 
+        </div>
+      </form>
+
+    </div>
+
+</div>
+    
+<div id="reg-success" class="container" style="padding-top: 50px" hidden="hidden">
+  
+    <div>
+        <div class="row">
+            <div class="twelve columns" align="center">
+                <img src="images/symbol.jpg" height="200" width="200">
+                <h3>Success! Check your mail!</h3>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+</html>
