@@ -12,4 +12,5 @@ public interface AccountsDao {
     boolean exists(String email);
     boolean update(Account account);
 
+    boolean confirmEmail(String email);
 }

@@ -2,6 +2,7 @@ package com.aquariusmaster.service;
 
 import com.aquariusmaster.entity.Account;
 import com.aquariusmaster.service.messaging.mail.domain.MailMessage;
+import com.aquariusmaster.service.messaging.mail.domain.MailUtils;
 import com.aquariusmaster.service.messaging.queue.MailMQPublisherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,7 @@ public class MailServiceImp implements MailService{
         {
             return;
         }
-        message.setBody("It's almost over!\nClick on the link bellow to confirm your registration:\nhttp://localhost:8080/confirm/" + encodedEmailAndCode ); // TODO: unhardcode server address
+        message.setBody(MailUtils.buildHTMLEmail(account.getEmail(), account.getPassword())); // TODO: unhardcode server address
         mailMQPublisherService.publishMailMessage(message);
     }
 }

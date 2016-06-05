@@ -29,7 +29,7 @@ public class AccountsDaoImpl implements AccountsDao {
      */
     @Override
     public boolean create(Account account) {
-        System.out.println("In create");
+
         String sql = "INSERT INTO accounts(email, password, is_confirmed) VALUES (?,?,?)";
         int result = jdbcOperations.update(sql, account.getEmail().toLowerCase(), account.getPassword(), account.is_confirmed());
         logger.info("AccountsDao: " + account + "; saved status is " + (result > 0));
@@ -43,7 +43,7 @@ public class AccountsDaoImpl implements AccountsDao {
      */
     @Override
     public Account getAccount(String email) {
-        System.out.println("In getAccount");
+
         String sql = "SELECT * FROM accounts WHERE email = ?";
 
         Account result = jdbcOperations.queryForObject(sql, new Object[]{email} , new RowMapper<Account>() {
@@ -80,10 +80,17 @@ public class AccountsDaoImpl implements AccountsDao {
      */
     @Override
     public boolean update(Account account) {
-        System.out.println("In create");
         String sql = "UPDATE accounts SET password = ?, is_confirmed = ? WHERE email = ?";
         int result = jdbcOperations.update(sql, account.getPassword(), account.is_confirmed(), account.getEmail().toLowerCase());
         logger.info("AccountsDao:UPDATE " + account + "; update status is " + (result > 0));
+        return result > 0;
+    }
+
+    @Override
+    public boolean confirmEmail(String email) {
+        String sql = "UPDATE accounts SET is_confirmed = TRUE WHERE email = ?";
+        int result = jdbcOperations.update(sql, new Object[]{email.toLowerCase()});
+        logger.info("AccountsDao:CONFIRM " + (result > 0) + " for email " + email);
         return result > 0;
     }
 

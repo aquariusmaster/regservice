@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ import java.util.List;
 public class MailSenderServiceImp implements MailSenderService {
 
     public static final String DEFAULT_CHARSET = "UTF-8";
+    public static final boolean IS_HTML = true;
     private static final Logger logger = LoggerFactory.getLogger(MailSenderServiceImp.class);
 
 
@@ -34,13 +36,14 @@ public class MailSenderServiceImp implements MailSenderService {
 
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(javaMailSender.createMimeMessage(), true, DEFAULT_CHARSET);
 
-            mimeMessageHelper.setText(mailMessage.getBody(), true);
+            mimeMessageHelper.setText(mailMessage.getBody(), IS_HTML);
             mimeMessageHelper.setFrom(generateInternetAddress(mailMessage.getSender()));
             mimeMessageHelper.setTo(generateInternetAddresses(mailMessage.getToList()));
             mimeMessageHelper.setCc(generateInternetAddresses(mailMessage.getCcList()));
             mimeMessageHelper.setBcc(generateInternetAddresses(mailMessage.getBccList()));
             mimeMessageHelper.setReplyTo(generateInternetAddress(mailMessage.getReplyTo()));
             mimeMessageHelper.setSubject(mailMessage.getSubject());
+
             javaMailSender.send(mimeMessageHelper.getMimeMessage());
 
         } catch (UnsupportedEncodingException | MessagingException exception) { // TODO: we can use the error info here to show user

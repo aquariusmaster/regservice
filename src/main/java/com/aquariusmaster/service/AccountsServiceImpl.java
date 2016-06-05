@@ -40,4 +40,9 @@ public class AccountsServiceImpl implements AccountsService {
         return accountsDao.exists(email);
     }
 
+    @Override
+    public boolean confirmEmail(String email) {
+        return accountsDao.confirmEmail(email);
+    }
+
 }

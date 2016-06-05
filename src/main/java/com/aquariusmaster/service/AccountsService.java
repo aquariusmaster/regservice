@@ -11,4 +11,5 @@ public interface AccountsService {
     Account getAccount(String email);
     boolean exists(String email);
 
+    boolean confirmEmail(String email);
 }
