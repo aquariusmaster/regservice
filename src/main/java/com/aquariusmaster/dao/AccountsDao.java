@@ -11,4 +11,5 @@ public interface AccountsDao {
     Account getAccount(String email);
     boolean exists(String email);
     boolean update(Account account);
+
 }

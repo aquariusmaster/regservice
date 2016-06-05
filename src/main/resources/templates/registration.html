@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 
     <!-- Basic Page Needs
@@ -43,7 +43,7 @@
 –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
 
-<div th:if="${return_status}">
+<div th:if="${error}">
     <script type="text/javascript">
         $(function () {
             $("#reg-start").hide();
@@ -74,7 +74,6 @@
 
         </div>
 
-        <!--/*@thymesVar id="account" type="com.aquariusmaster.entity.Account"*/-->
         <form th:action="@{/registration}" method="post" th:object="${account}">
             <div class="row">
                 <div class="two columns" align="right">

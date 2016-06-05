@@ -3,11 +3,8 @@ package com.aquariusmaster.dao;
 import com.aquariusmaster.entity.Account;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
@@ -23,7 +20,7 @@ public class AccountsDaoImpl implements AccountsDao {
     private static Logger logger = Logger.getLogger(AccountsDaoImpl.class);
 
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private JdbcOperations jdbcOperations;
 
     /** Saving new Account into DB
      *
@@ -34,7 +31,7 @@ public class AccountsDaoImpl implements AccountsDao {
     public boolean create(Account account) {
         System.out.println("In create");
         String sql = "INSERT INTO accounts(email, password, is_confirmed) VALUES (?,?,?)";
-        int result = jdbcTemplate.update(sql, account.getEmail().toLowerCase(), account.getPassword(), account.is_confirmed());
+        int result = jdbcOperations.update(sql, account.getEmail().toLowerCase(), account.getPassword(), account.is_confirmed());
         logger.info("AccountsDao: " + account + "; saved status is " + (result > 0));
         return result > 0;
     }
@@ -49,7 +46,7 @@ public class AccountsDaoImpl implements AccountsDao {
         System.out.println("In getAccount");
         String sql = "SELECT * FROM accounts WHERE email = ?";
 
-        Account result = jdbcTemplate.queryForObject(sql, new Object[]{email} , new RowMapper<Account>() {
+        Account result = jdbcOperations.queryForObject(sql, new Object[]{email} , new RowMapper<Account>() {
             @Override
             public Account mapRow(ResultSet resultSet, int i) throws SQLException {
                 Account account = new Account();
@@ -71,7 +68,7 @@ public class AccountsDaoImpl implements AccountsDao {
     @Override
     public boolean exists(String email) {
         String sql = "SELECT COUNT(*) FROM accounts WHERE email = ?";
-        int result = jdbcTemplate.queryForObject(sql, new Object[]{email.toLowerCase()}, Integer.class);
+        int result = jdbcOperations.queryForObject(sql, new Object[]{email.toLowerCase()}, Integer.class);
         logger.info("AccountsDao:EXIST exists is :  " + (result == 1) + " for email " + email);
         return result == 1;
     }
@@ -85,8 +82,10 @@ public class AccountsDaoImpl implements AccountsDao {
     public boolean update(Account account) {
         System.out.println("In create");
         String sql = "UPDATE accounts SET password = ?, is_confirmed = ? WHERE email = ?";
-        int result = jdbcTemplate.update(sql, account.getPassword(), account.is_confirmed(), account.getEmail().toLowerCase());
+        int result = jdbcOperations.update(sql, account.getPassword(), account.is_confirmed(), account.getEmail().toLowerCase());
         logger.info("AccountsDao:UPDATE " + account + "; update status is " + (result > 0));
         return result > 0;
     }
+
+
 }

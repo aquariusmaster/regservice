@@ -15,6 +15,7 @@ public class RegserviceApplication {
 
 	public static void main(String[] args) {
 
+        System.setProperty("org.apache.activemq.SERIALIZABLE_PACKAGES","*");  //TODO костыль
         SpringApplication.run(RegserviceApplication.class, args);
 
     }
