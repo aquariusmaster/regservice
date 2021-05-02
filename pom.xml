@@ -23,7 +23,7 @@
 		<java.version>1.8</java.version>
         <jacoco.version>0.7.6.201602180812</jacoco.version>
         <spring.version>4.2.6.RELEASE</spring.version>
-        <hibernate.validator>5.2.4.Final</hibernate.validator>
+        <hibernate.validator>5.2.5.Final</hibernate.validator>
 	</properties>
 
 	<dependencies>
